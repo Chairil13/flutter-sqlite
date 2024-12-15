@@ -176,12 +176,13 @@ class _MangaScreenState extends State<MangaScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.red,
-                            content: Text('${deletedManga.title} telah dihapus'),
+                            content: Text('${manga.title} telah dihapus'),
                             action: SnackBarAction(
                               label: 'BATAL',
                               textColor: Colors.white,
                               onPressed: () async {
-                                await _databaseHelper.insertManga(deletedManga.toMap());
+                                await _databaseHelper
+                                    .insertManga(deletedManga.toMap());
                                 _loadMangaList();
                               },
                             ),
@@ -401,10 +402,11 @@ class _MangaScreenState extends State<MangaScreen> {
                               imagePath: selectedImage!.path,
                             );
                             print('Created manga item: ${mangaItem.toMap()}');
-                            
-                            final id = await _databaseHelper.insertManga(mangaItem.toMap());
+
+                            final id = await _databaseHelper
+                                .insertManga(mangaItem.toMap());
                             print('Inserted manga with ID: $id');
-                            
+
                             setState(() {
                               mangaList.add(MangaItem(
                                 id: id,
@@ -415,9 +417,10 @@ class _MangaScreenState extends State<MangaScreen> {
                                 imagePath: selectedImage!.path,
                               ));
                             });
-                            
+
                             Navigator.pop(context);
-                            print('Manga list updated, length: ${mangaList.length}');
+                            print(
+                                'Manga list updated, length: ${mangaList.length}');
                           } catch (e) {
                             print('Error saving manga: $e');
                           }
